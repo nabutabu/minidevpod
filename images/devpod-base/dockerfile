@@ -1,0 +1,27 @@
+FROM ubuntu:22.04
+
+# Install SSH and development tools you want available
+RUN apt-get update && apt-get install -y \
+    openssh-server \
+    sudo \
+    git \
+    bash \
+    vim \
+    curl \
+    ca-certificates \
+    && mkdir /var/run/sshd
+
+# Create user "dev" with password "dev"
+RUN useradd -ms /bin/bash dev && \
+    echo "dev:dev" | chpasswd && \
+    adduser dev sudo
+
+# Allow password authentication (simple for MVP)
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+RUN sed -i 's/PasswordAuthentication no/#PasswordAuthentication no/' /etc/ssh/sshd_config
+
+# Expose SSH port
+EXPOSE 22
+
+# Make sure sshd runs in the foreground
+CMD ["/usr/sbin/sshd", "-D"]
