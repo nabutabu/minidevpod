@@ -23,9 +23,9 @@ func CreatePod(client kubernetes.Interface, name string) error {
 		Spec: v1.PodSpec{
 			Containers: []v1.Container{
 				{
-					Name:    "main",
-					Image:   "busybox:latest",
-					Command: []string{"sleep", "3600"},
+					Name:            "main",
+					Image:           "devpod-base",
+					ImagePullPolicy: "Never",
 				},
 			},
 		},

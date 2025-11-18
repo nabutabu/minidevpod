@@ -29,3 +29,15 @@ func NewClientSet() (*kubernetes.Clientset, error) {
 
 	return clientSet, nil
 }
+
+func GetConfig() (*rest.Config, error) {
+	config, err := rest.InClusterConfig()
+	if err != nil {
+		config, err = clientcmd.BuildConfigFromFlags("", ConfigLocation)
+		if err != nil {
+			return nil, errors.New("Could not build config")
+		}
+	}
+
+	return config, nil
+}
