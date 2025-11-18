@@ -40,6 +40,16 @@ var createCmd = &cobra.Command{
 	},
 }
 
+var connectCmd = &cobra.Command{
+	Use:     "Connect to an existing pod",
+	Aliases: []string{"connect"},
+	Args:    cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		err := Connect(args[0])
+		return err
+	},
+}
+
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
@@ -62,4 +72,5 @@ func init() {
 	createCmd.Flags().String("name", "", "Name of new pod")
 
 	rootCmd.AddCommand(createCmd)
+	rootCmd.AddCommand(connectCmd)
 }

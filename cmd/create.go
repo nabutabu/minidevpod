@@ -2,12 +2,13 @@ package cmd
 
 import (
 	"context"
-	"github.com/google/uuid"
-	v1 "k8s.io/api/core/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"log"
 	"miniDevPod/internal/k8s"
 	"time"
+
+	"github.com/google/uuid"
+	v1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func generateName() string {
@@ -44,10 +45,10 @@ func CreatePod(name string) {
 
 	log.Println("DevPod is running!")
 
-	nodePort, err := k8s.CreateService(clientSet, name)
+	_, err = k8s.CreateService(clientSet, name)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Printf("SSH into pod using:\nssh dev@127.0.0.1 -p %d\n", nodePort)
+	log.Printf("SSH into pod using:\ngo run main.go connect %s\n", name)
 }
