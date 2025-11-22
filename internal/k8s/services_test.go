@@ -13,7 +13,7 @@ import (
 func TestCreateService(t *testing.T) {
 	clientSet := fake.NewSimpleClientset()
 	podName := "test-pod"
-	assert.Nil(t, CreatePod(clientSet, podName))
+	assert.Nil(t, CreatePod(clientSet, podName, "", "", "", ""))
 	port, err := CreateService(clientSet, podName)
 	assert.Nil(t, err)
 	log.Println(port)

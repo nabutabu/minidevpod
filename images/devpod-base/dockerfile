@@ -9,7 +9,10 @@ RUN apt-get update && apt-get install -y \
     vim \
     curl \
     ca-certificates \
+    rsync \
     && mkdir /var/run/sshd
+
+COPY rsyncd.conf /etc/rsyncd.conf
 
 # Create user "dev" with password "dev"
 RUN useradd -ms /bin/bash dev && \
@@ -24,4 +27,5 @@ RUN sed -i 's/PasswordAuthentication no/#PasswordAuthentication no/' /etc/ssh/ss
 EXPOSE 22
 
 # Make sure sshd runs in the foreground
-CMD ["/usr/sbin/sshd", "-D"]
+CMD rsync --daemon --config=/etc/rsyncd.conf & \
+    exec /usr/sbin/sshd -D
