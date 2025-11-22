@@ -15,7 +15,7 @@ func generateName() string {
 	return uuid.NewString()
 }
 
-func CreatePod(name string) {
+func CreatePod(name string, repo string, branch string, cpuRequest string, memRequest string) {
 	if name == "" {
 		name = generateName()
 	}
@@ -31,7 +31,7 @@ func CreatePod(name string) {
 
 	// call pods.create
 	log.Printf("Creating pod: %s\n", name)
-	err = k8s.CreatePod(clientSet, name)
+	err = k8s.CreatePod(clientSet, name, repo, branch, cpuRequest, memRequest)
 	if err != nil {
 		log.Fatal(err)
 	}

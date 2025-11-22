@@ -34,3 +34,19 @@ func Connect(name string) error {
 
 	return nil
 }
+
+func Forward(name string, localPort int, remotePort int) error {
+	clientSet, err := k8s.NewClientSet()
+	if err != nil {
+		return err
+	}
+
+	// k8s.ExecInPod(clientSet, name)
+	config, err := k8s.GetConfig()
+	if err != nil {
+		return err
+	}
+
+	_, err = k8s.PortForward(config, clientSet, name, localPort, remotePort)
+	return err
+}

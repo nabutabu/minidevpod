@@ -2,6 +2,7 @@ package k8s
 
 import (
 	"context"
+
 	corev1 "k8s.io/api/core/v1"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -12,10 +13,11 @@ import (
 func CreateService(client kubernetes.Interface, podName string) (int, error) {
 	service := &v1.Service{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "my-service",
+			Name:      podName + "-service",
 			Namespace: "default",
 			Labels: map[string]string{
-				"app": "devpod",
+				"app":         "devpod",
+				"devpod-name": podName,
 			},
 		},
 		Spec: corev1.ServiceSpec{
@@ -29,6 +31,12 @@ func CreateService(client kubernetes.Interface, podName string) (int, error) {
 					Protocol:   corev1.ProtocolTCP,
 					Port:       22,
 					TargetPort: intstr.FromInt(22), // target port on pod
+				},
+				{
+					Name:       "rsync",
+					Protocol:   corev1.ProtocolTCP,
+					Port:       873,
+					TargetPort: intstr.FromInt(873),
 				},
 			},
 			Type: corev1.ServiceTypeNodePort,

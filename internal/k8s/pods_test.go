@@ -11,5 +11,5 @@ import (
 
 func TestCreateNewPod(t *testing.T) {
 	clientSet := fake.NewSimpleClientset()
-	assert.Nil(t, CreatePod(clientSet, "test-pod-2"))
+	assert.Nil(t, CreatePod(clientSet, "test-pod-2", "https://github.com/nabutabu/httpfromtcp", "using_net", "500m", "1Gi"))
 }
