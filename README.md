@@ -11,6 +11,11 @@ A lightweight CLI tool for managing development pods in Kubernetes. Built with G
 - **Forward** ports between host and pod
 - **Sync** files from host to pod
 
+## Demo
+
+[Screencast from 2026-02-07 15-29-51.webm](https://github.com/user-attachments/assets/890e5b05-6cec-40b9-9715-c2cbdd23c390)
+
+
 ## Installation
 
 ```bash
